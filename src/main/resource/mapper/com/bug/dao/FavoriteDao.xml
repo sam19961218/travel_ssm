@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bug.dao.FavoriteDao">
+    <!--Favorite findByRidAndUid(int rid, int uid);-->
+    <select id="findByRidAndUid" resultType="com.bug.domain.Favorite">
+        select *
+        from tab_favorite
+        where rid = #{rid}
+          and uid = #{uid}
+    </select>
+
+
+    <!--int findCountByRid(int rid);-->
+    <select id="findCountByRid" resultType="int">
+        SELECT COUNT(*)
+        FROM tab_favorite
+        WHERE rid = #{rid}
+    </select>
+
+    <!-- void add(@Param("rid")int rid, @Param("date") Date date, @Param("uid") int uid);-->
+    <insert id="add">
+        insert into tab_favorite
+        values (#{rid}, #{date}, #{uid})
+    </insert>
+
+
+</mapper>

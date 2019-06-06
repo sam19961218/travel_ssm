@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         id="WebApp_ID" version="3.0">
+
+
+    <display-name>Archetype Created Web Application</display-name>
+
+
+    <!--1、启动Spring的容器 项目一启动就启动spring容器 -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <!--加载配置文件-->
+        <param-value>classpath:applicationContext.xml</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+
+    <!--2、springmvc的前端控制器，拦截所有请求  -->
+    <servlet>
+        <!--没有配置init-param Servlet 在 Web 应用程序启动时立即加载，DispatcherServlet 加载是需要一个Spring MVC 的配置文件，
+        默认情况下，应用会去应用程序文件夹下的 WEB-INF 文件夹下查找对应的[servlet-name]-servlet.xml (本例是 spring-mvc.xml)-->
+        <servlet-name>dispatcherServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+
+<!-- 3、字符编码过滤器，一定要放在所有过滤器之前 -->
+<filter>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+        <param-name>encoding</param-name>
+        <param-value>utf-8</param-value>
+    </init-param>
+    <init-param>
+        <param-name>forceRequestEncoding</param-name>
+        <param-value>true</param-value>
+    </init-param>
+    <init-param>
+        <param-name>forceResponseEncoding</param-name>
+        <param-value>true</param-value>
+    </init-param>
+</filter>
+<filter-mapping>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+
+    <welcome-file-list>
+        <welcome-file>/index.html</welcome-file>
+        <welcome-file>/static/index.html</welcome-file>
+    </welcome-file-list>
+
+
+</web-app>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bug.dao.route.RouteDao">
+
+    <!--int findTotalCount(int cid, String rname);-->
+    <select id="findTotalCount" resultType="int">
+        <!--取出的值默认两边加上% -->
+        <if test="rname!=null">
+            <bind name="_rname" value="'%'+rname+'%'"/>
+        </if>
+
+        select count(*) from tab_route
+        <where>
+            cid = #{cid}
+            <if test="rname!=null">
+                and rname like #{_rname}
+            </if>
+        </where>
+
+    </select>
+
+    <!--# Preparing: select * from tab_route WHERE cid = ? and rname like ? limit ?, ?-->
+    <!--# Parameters: 5(Integer), %null%(String), 30(Integer), 10(Integer)-->
+
+
+    <!--limit ? , ? 第一个是重哪里开始，第二个查询的记录条数-->
+    <!--List<Route> findByPage(int cid, int start, int pageSize, String rname);-->
+    <select id="findByPage" resultType="com.bug.domain.route.Route">
+        <if test="rname!=null">
+            <bind name="_rname" value="'%'+rname+'%'"/>
+        </if>
+        select * from tab_route
+        <where>
+            cid = #{cid}
+            <if test="rname!=null">
+                and rname like #{_rname}
+            </if>
+            limit #{start}, #{pageSize}
+        </where>
+    </select>
+
+
+    <!--Route findOne(int cid);-->
+    <select id="findOne" resultType="com.bug.domain.route.Route">
+        select *
+        from tab_route
+        where rid = #{cid}
+    </select>
+
+
+</mapper>

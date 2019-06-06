@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bug.dao.UserDao">
+
+
+    <!--User findByUsername(String username);-->
+    <select id="findByUsername" resultType="com.bug.domain.User">
+        select *
+        from tab_user
+        where username = #{username}
+    </select>
+
+
+    <!--用户名密码非空-->
+    <!--动态插入，有什么插入什么-->
+    <insert id="save">
+        insert into tab_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                `username`,
+            </if>
+            <if test="password != null">
+                `password`,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="birthday != null">
+                `birthday`,
+            </if>
+            <if test="sex != null">
+                `sex`,
+            </if>
+            <if test="telephone != null">
+                `telephone`,
+            </if>
+            <if test="email != null">
+                `email`,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="code != null">
+                `code`,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                #{username},
+            </if>
+            <if test="password != null">
+                #{password},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="birthday != null">
+                #{birthday},
+            </if>
+            <if test="sex != null">
+                #{sex},
+            </if>
+            <if test="telephone != null">
+                #{telephone},
+            </if>
+            <if test="email != null">
+                #{email},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="code != null">
+                #{code},
+            </if>
+        </trim>
+    </insert>
+
+    <!--User findByCode(String code);-->
+    <select id="findByCode" resultType="com.bug.domain.User">
+        select * from tab_user where code = #{code}
+    </select>
+
+    <!--void updateStatus(User user);-->
+    <update id="updateStatus" >
+        update tab_user set status = 'Y' where uid=#{uid}
+    </update>
+
+    <!--User findByUsernameAndPassword(String username, String password);-->
+    <select id="findByUsernameAndPassword" resultType="com.bug.domain.User">
+        select * from tab_user where username = #{username} and password = #{password}
+    </select>
+
+</mapper>
